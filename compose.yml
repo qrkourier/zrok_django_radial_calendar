@@ -1,0 +1,7 @@
+services:
+  web:
+    build: .
+    ports:
+      - 8001:8001
+    environment:
+      DJANGO_DEBUG: false

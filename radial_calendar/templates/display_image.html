@@ -1,0 +1,6 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+
+<div class="container">
+<img src="{% url 'serve_file' file_name=file_name %}" alt="Image">
+</div>

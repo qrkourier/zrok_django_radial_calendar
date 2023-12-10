@@ -1,0 +1,30 @@
+/* styles.css */
+body {
+    background-color: #cbcbcb;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+.container {
+    margin: 0 auto;
+    width: 50%;
+    padding: 10px;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+}
+
+.form_opts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Optional: Adds some space between the elements */
+    background-color: #c2cbcf;
+}
+
+.data_table table, .data_table td {
+    padding: 10px;
+}
+
+th, td {
+    /* border-collapse: collapse; */
+    border: 1px solid rgb(85, 85, 85);
+    width: 60%;
+}

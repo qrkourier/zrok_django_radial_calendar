@@ -1,0 +1,53 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+
+<div class="container">
+
+<div class="form_opts">
+    <form id="generate-form">
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title"><br>
+        <label for="type">Type:</label><br>
+        <select id="type" name="type">
+            <option value="svg">SVG</option>
+            <option value="png">PNG</option>
+        </select><br>
+        <label for="legend">Legend:</label>
+        <input type="checkbox" id="legend" name="legend" value="true"><br>
+        <label for="legend">Labels:</label>
+        <input type="checkbox" id="labels" name="labels" value="true" checked><br>
+        <button class="generate">PLOT</button>
+    </form>
+</div>
+
+<div class="data_table">
+    <h2>Data</h2>
+    {{ table|safe }}
+</div>
+
+<script>
+$('.generate').click(function(e) {
+    e.preventDefault();  // Prevent the form from being submitted normally
+
+    var title = $('#title').val();  // Get the value of the title field
+    var type = $('#type').val();  // Get the selected type
+    var legend = $('#legend').is(':checked');  // Get the state of the legend checkbox
+    var labels = $('#labels').is(':checked');  // Get the state of the labels checkbox
+
+    $.ajax({
+        url: '/generate_radial/',
+        type: 'get',
+        data: {title: title, type: type, legend: legend, labels: labels},  // Send the title, type, legend, and labels as query parameters
+        success: function(response) {
+            console.log("Success: ", response);
+            window.location.href = '/display_image/?type=' + type;  // Redirect to display_image with the type parameter
+        },
+        error: function(xhr, status, error) {
+            console.log("Error: ", error);
+        }
+    });
+});
+</script>
+
+</div>
