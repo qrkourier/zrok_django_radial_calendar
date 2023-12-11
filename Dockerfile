@@ -16,6 +16,7 @@ RUN pip install -r requirements.txt
 # Copy project
 COPY . /code/
 RUN python manage.py collectstatic --no-input
+RUN python manage.py migrate
 RUN chown -R nobody:nogroup /code/
 USER nobody
 CMD gunicorn zrok_django_radial_calendar.wsgi:application --bind 0.0.0.0:8001

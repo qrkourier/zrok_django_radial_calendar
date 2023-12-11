@@ -41,7 +41,7 @@ services:
           else:
             time.sleep(1);
         print('ZROK_FRONTEND: %s' % os.environ['ZROK_FRONTEND']);
-        subprocess.run(sys.argv[1:], env=os.environ)
+        os.execvpe('gunicorn', sys.argv[1:], os.environ);
     command: gunicorn zrok_django_radial_calendar.wsgi:application --bind 0.0.0.0:8001
     volumes:
       - zrok_env:/mnt
