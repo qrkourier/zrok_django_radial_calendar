@@ -1,5 +1,8 @@
 # zrok_django_radial_calendar
-Plot events on a radial calendar
+Web app that plot events on a radial calendar.
+
+![events](https://github.com/qrkourier/zrok_django_radial_calendar/assets/1434400/26ab2463-daa3-409c-9cc7-c309f5e70d27)
+
 
 ## Production
 
