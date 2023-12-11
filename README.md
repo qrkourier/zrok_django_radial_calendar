@@ -3,7 +3,10 @@ Plot events on a radial calendar
 
 ## Production
 
-1. Create an `.env` file in the same directory as `compose.yml`.
+The included `compose.yml` base project file is copied unmodified from [the zrok
+docs](https://docs.zrok.io/zrok-public-reserved/compose.yml). All customizations are in `compose.override.yml`.
+
+1. Create an `.env` file in the same directory as `compose.override.yml`.
 
     ```bash
     # .env
