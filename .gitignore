@@ -1,3 +1,4 @@
 /db.sqlite3
 radial_calendar-user-*/**
 *.pyc
+/.env

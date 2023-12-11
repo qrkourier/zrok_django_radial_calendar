@@ -30,6 +30,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 ZROK_FRONTEND = os.getenv('ZROK_FRONTEND')
 
+# if not ZROK_FRONTEND:
+#     raise ValueError("ZROK_FRONTEND environment variable cannot be an empty string")
+
 ALLOWED_HOSTS = [
     ZROK_FRONTEND,
     "127.0.0.1",

@@ -1,0 +1,38 @@
+services:
+  django:
+    build: .
+    ports:
+      - 8001:8001
+    environment:
+      DJANGO_DEBUG: false
+      DJANGO_SECRET_KEY:
+      ZROK_FRONTEND:
+    restart: unless-stopped
+    entrypoint:
+      - python 
+      - -c
+      - |
+        import os, time, json, subprocess, sys;
+        start_time = time.time(); 
+        while time.time() - start_time < 60:
+          if os.path.exists('/mnt/.zrok/reserved.json'):
+            with open('/mnt/.zrok/reserved.json') as f:
+              try:
+                data = json.load(f);
+              except json.decoder.JSONDecodeError:
+                time.sleep(1);
+                continue;
+              if 'frontend_endpoints' in data and data['frontend_endpoints']:
+                zrok_frontend = data['frontend_endpoints'][0]
+                zrok_frontend = zrok_frontend.replace('https://', '')
+                if zrok_frontend.endswith('/'):
+                    zrok_frontend = zrok_frontend[:-1]
+                os.environ['ZROK_FRONTEND'] = zrok_frontend
+                break;
+          else:
+            time.sleep(1);
+        print('ZROK_FRONTEND: %s' % os.environ['ZROK_FRONTEND']);
+        subprocess.run(sys.argv[1:], env=os.environ)
+    command: gunicorn zrok_django_radial_calendar.wsgi:application --bind 0.0.0.0:8001
+    volumes:
+      - zrok_env:/mnt
