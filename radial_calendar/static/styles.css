@@ -12,6 +12,10 @@ body {
     border-radius: 5px;
 }
 
+.footer {
+    text-align: center;
+}
+
 .form_opts {
     display: flex;
     flex-wrap: wrap;
