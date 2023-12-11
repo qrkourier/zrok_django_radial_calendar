@@ -1,4 +1,12 @@
 services:
+  zrok-share:
+    environment:
+      # tells zrok to share the django container's gunicorn server
+      ZROK_TARGET: http://django:8001
+      # authN options
+      ZROK_OAUTH_PROVIDER:  # google, github
+      ZROK_OATH_EMAILS:     # allow space-separated list of OAuth email addresses or @domain.tld
+      ZROK_BASIC_AUTH:      # username:password, mutually-exclusive with ZROK_OAUTH_PROVIDER
   django:
     build: .
     ports:
@@ -8,6 +16,7 @@ services:
       DJANGO_SECRET_KEY:
       ZROK_FRONTEND:
     restart: unless-stopped
+    # wait for zrok to reserve a frontend endpoint before starting django
     entrypoint:
       - python 
       - -c
