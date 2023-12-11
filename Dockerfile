@@ -9,8 +9,12 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /code
 
 # Install dependencies
-COPY requirements.txt /code/
+RUN apt-get -y update \
+    && apt-get -y install \
+        git \
+    && rm -rf /var/lib/apt/lists/*
 RUN pip install --upgrade pip
+COPY requirements.txt /code/
 RUN pip install -r requirements.txt
 
 # Copy project
@@ -19,4 +23,3 @@ RUN python manage.py collectstatic --no-input
 RUN python manage.py migrate
 RUN chown -R nobody:nogroup /code/
 USER nobody
-CMD gunicorn zrok_django_radial_calendar.wsgi:application --bind 0.0.0.0:8001

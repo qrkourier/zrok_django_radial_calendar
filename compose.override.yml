@@ -1,8 +1,13 @@
 services:
   zrok-share:
+    restart: no
     environment:
-      # tells zrok to share the django container's gunicorn server
-      ZROK_TARGET: http://django:8001
+      # this is a dummy value because zrok reserve public requires a backend mode and target, though they're not used
+      # when using the SDK
+      ZROK_TARGET: http://example.com
+      # tell zrok-share.bash to only reserve, but don't run the share, because we're using the SDK to provide the
+      # share's bind point
+      ZROK_SHARE_RESERVED: "false"
       # authN options
       ZROK_OAUTH_PROVIDER:  # google, github
       ZROK_OATH_EMAILS:     # allow space-separated list of OAuth email addresses or @domain.tld
@@ -33,15 +38,17 @@ services:
                 continue;
               if 'frontend_endpoints' in data and data['frontend_endpoints']:
                 zrok_frontend = data['frontend_endpoints'][0]
+                zrok_token = data['token']
                 zrok_frontend = zrok_frontend.replace('https://', '')
                 if zrok_frontend.endswith('/'):
                     zrok_frontend = zrok_frontend[:-1]
                 os.environ['ZROK_FRONTEND'] = zrok_frontend
+                os.environ['ZROK_TOKEN'] = zrok_token
                 break;
           else:
             time.sleep(1);
         print('ZROK_FRONTEND: %s' % os.environ['ZROK_FRONTEND']);
-        os.execvpe('gunicorn', sys.argv[1:], os.environ);
-    command: gunicorn zrok_django_radial_calendar.wsgi:application --bind 0.0.0.0:8001
+        os.execvpe('python', sys.argv[1:], os.environ);
+    command: python server.py /mnt/.zrok/identities/environment.json
     volumes:
       - zrok_env:/mnt
