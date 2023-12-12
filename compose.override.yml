@@ -1,4 +1,7 @@
 services:
+  zrok-enable:
+    environment:
+      ZROK_ENVIRONMENT_NAME: radial-calendar
   zrok-share:
     restart: no
     environment:
@@ -20,33 +23,6 @@ services:
       DJANGO_SECRET_KEY:
     restart: unless-stopped
     # wait for zrok to reserve a frontend endpoint before starting django
-    entrypoint:
-      - python 
-      - -c
-      - |
-        import os, time, json, subprocess, sys;
-        start_time = time.time(); 
-        while time.time() - start_time < 60:
-          if os.path.exists('/mnt/.zrok/reserved.json'):
-            with open('/mnt/.zrok/reserved.json') as f:
-              try:
-                data = json.load(f);
-              except json.decoder.JSONDecodeError:
-                time.sleep(1);
-                continue;
-              if 'frontend_endpoints' in data and data['frontend_endpoints']:
-                zrok_frontend = data['frontend_endpoints'][0]
-                zrok_token = data['token']
-                zrok_frontend = zrok_frontend.replace('https://', '')
-                if zrok_frontend.endswith('/'):
-                    zrok_frontend = zrok_frontend[:-1]
-                os.environ['ZROK_FRONTEND'] = zrok_frontend
-                os.environ['ZROK_TOKEN'] = zrok_token
-                break;
-          else:
-            time.sleep(1);
-        print('ZROK_FRONTEND: %s' % os.environ['ZROK_FRONTEND']);
-        os.execvpe('python', sys.argv[1:], os.environ);
-    command: python server.py /mnt/.zrok/identities/environment.json
+    command: python server.py /mnt
     volumes:
       - zrok_env:/mnt
