@@ -40,7 +40,7 @@ def waitForEnable():
             time.sleep(1)
     else:  # executed if the loop ended normally (no break)
         raise Exception('Timeout: Unable to find reserved.json within 60 seconds')
-    print(f'INFO: ZROK_FRONTEND is https://{os.environ['ZROK_FRONTEND']}/')
+    print(f"INFO: ZROK_FRONTEND is https://{os.environ['ZROK_FRONTEND']}/")
 
 
 # the port is fictitious because we're using ziti to bind to the service, so there are no listening ports. waitress
