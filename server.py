@@ -6,7 +6,7 @@ import time
 import openziti
 from waitress import serve
 
-from zrok_django_radial_calendar.wsgi import application
+
 
 
 # this script waits for the deployment to enable a zrok environment which produces a reserved.json file describing the
@@ -40,13 +40,14 @@ def waitForEnable():
             time.sleep(1)
     else:  # executed if the loop ended normally (no break)
         raise Exception('Timeout: Unable to find reserved.json within 60 seconds')
-    print(f'INFO: ZROK_FRONTEND is https://{zrok_frontend}/')
+    print(f'INFO: ZROK_FRONTEND is https://{os.environ['ZROK_FRONTEND']}/')
 
 
 # the port is fictitious because we're using ziti to bind to the service, so there are no listening ports. waitress
 # requires a port, so we're using the port number only to integrate the ziti SDK with waitress.
 @openziti.zitify(bindings={':8002': bind_opts})
 def runServer():
+    from zrok_django_radial_calendar.wsgi import application
     serve(application, port='8002')
 
 
