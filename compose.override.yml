@@ -14,12 +14,10 @@ services:
       ZROK_BASIC_AUTH:      # username:password, mutually-exclusive with ZROK_OAUTH_PROVIDER
   django:
     build: .
-    ports:
-      - 8001:8001
+    ports: []  # there are no listening ports because the app is hosted by OpenZiti
     environment:
       DJANGO_DEBUG: "False"  # unset or set to "True" to enable debug mode
       DJANGO_SECRET_KEY:
-      ZROK_FRONTEND:
     restart: unless-stopped
     # wait for zrok to reserve a frontend endpoint before starting django
     entrypoint:
