@@ -1,6 +1,8 @@
 # Use an official Python runtime as a parent image
 FROM python:3.11-slim-buster
 
+ARG ZROK_PY_NAME=zrok
+
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1

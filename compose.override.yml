@@ -8,6 +8,7 @@ services:
       # this is a dummy value because zrok reserve public requires a backend mode and target, though they're not used
       # when using the SDK
       ZROK_TARGET: http://example.com
+      ZROK_UNIQUE_NAME: radial
       # tell zrok-share.bash to only reserve, but don't run the share, because we're using the SDK to provide the
       # share's bind point
       ZROK_SHARE_RESERVED: "false"
