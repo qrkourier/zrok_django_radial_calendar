@@ -17,7 +17,7 @@ RUN apt-get -y update \
     && rm -rf /var/lib/apt/lists/*
 RUN pip install --upgrade pip
 COPY requirements.txt /code/
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt --extra-index-url=https://test.pypi.org/simple/
 
 # Copy project
 COPY . /code/

@@ -21,4 +21,4 @@ tzdata>=2023.3
 urllib3>=2.1.0
 waitress>=2.1.2
 whitenoise>=6.6.0
-git+https://github.com/openziti/zrok.git@python-server-example#egg=zrok&subdirectory=sdk/python/sdk/zrok
+zrok==0.40.19
