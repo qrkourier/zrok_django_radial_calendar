@@ -27,3 +27,5 @@ services:
     command: python server.py /mnt
     volumes:
       - zrok_env:/mnt
+  zrok-test:
+    profiles: ["test"]
