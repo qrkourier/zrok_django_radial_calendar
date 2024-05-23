@@ -21,4 +21,4 @@ tzdata>=2023.3
 urllib3>=2.1.0
 waitress>=2.1.2
 whitenoise>=6.6.0
-zrok==0.40.19
+zrok==0.4.30

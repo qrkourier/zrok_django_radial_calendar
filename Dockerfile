@@ -1,6 +1,9 @@
 # Use an official Python runtime as a parent image
 FROM python:3.11-slim-buster
 
+ARG PUID=2171
+ARG PGID=2171
+
 ARG ZROK_PY_NAME=zrok
 
 # Set environment variables
@@ -23,5 +26,5 @@ RUN pip install -r requirements.txt --extra-index-url=https://test.pypi.org/simp
 COPY . /code/
 RUN python manage.py collectstatic --no-input
 RUN python manage.py migrate
-RUN chown -R nobody:nogroup /code/
-USER nobody
+RUN chown -R ${PUID}:${PGID} /code/
+USER ${PGID}
