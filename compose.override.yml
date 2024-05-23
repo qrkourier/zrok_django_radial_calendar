@@ -1,7 +1,4 @@
 services:
-  zrok-enable:
-    environment:
-      ZROK_ENVIRONMENT_NAME: radial-calendar
   zrok-share:
     restart: no
     environment:
